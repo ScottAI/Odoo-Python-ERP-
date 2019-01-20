@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="bug_wizard" model="ir.ui.view">
+            <field name="name">bug管理-向导</field>
+            <field name="model">bug.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div class="oe_right">
+                        <button type="object" name="count_bugs" string="统计bug数"/>
+                        <button type="object" name="get_bugs" string="获取bug"/>
+                    </div>
+                    <field name="bug_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="user_id"/>
+                            <field name="is_closed"/>
+                        </tree>
+                    </field>
+                    <group>
+                        <group><field name="wizard_user_id"/></group>
+                        <group><field name="new_is_closed"/></group>
+                    </group>
+                    <footer>
+                        <button type="object" name="update_batch" string="批量更新" class="oe_highlight"
+                                attrs="{'invisible':[('new_is_closed','=',False),('wizard_user_id','=',False)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_bug_wizard"
+                    name="bug管理向导"
+                    src_model="bm.bug"
+                    res_model="bug.wizard"
+                    view_mode="form"
+                    target="new"
+                    multi="True"/>
+    </data>
+</odoo>
