@@ -71,15 +71,9 @@
                           </div>
                           <ul>
                             <li><field name="user_id" /></li>
-                            <!--  书中第9章内容
+                            <!--  书中第9章内容 -->
                             <li><field name="deadline" /></li>
-                            -->
-                            <li t-attf-class="oe_kanban_text_{{
-                              record.deadline.raw_value and
-                              record.deadline.raw_value lt (new Date())
-                              ? 'red' : 'black' }}">
-                              <field name="date_deadline"/>
-                            </li>
+                           
                           </ul>
                     </div>
                     <div class="oe_kanban_footer">
