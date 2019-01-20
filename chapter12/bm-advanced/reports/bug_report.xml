@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+      <report id="action_bug_report"
+        string="bug"
+        model="bm.bug"
+        report_type="qweb-pdf"
+        name="bug_stage.report_bug_template"
+      />
+
+      <template id="report_bug_template">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+              <div class="page">
+
+                <!-- 报表头部内容 -->
+                <t t-foreach="docs" t-as="o">
+                  <!-- 报表行内容 -->
+                </t>
+                <!-- 报表底部内容 -->
+
+              </div>
+            </t>
+          </t>
+      </template>
+      <template id="report_bug_template2">
+          <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+
+              <t t-foreach="docs" t-as="o">
+                <div class="page">
+                  <!-- 报表内容 -->
+                </div>
+              </t>
+
+            </t>
+          </t>
+      </template>
+  </data>
+</odoo>
