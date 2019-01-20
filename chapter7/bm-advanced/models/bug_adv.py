@@ -27,16 +27,6 @@ class BugAdvanced(models.Model):
         default='normal')
     color = fields.Integer('颜色')
 
-    @api.onchange('user_id')
-    def user_follower_ref(self):
-        if not self.user_id:
-            self.follower_id = None
-        return {
-            'warning': {
-                'title': '无负责人',
-                'message': '关注者也被清空'
-            }
-        }
 
     user_bug_count = fields.Integer(
         '待处理bug总数',
