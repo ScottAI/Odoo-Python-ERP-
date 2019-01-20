@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+    <record id="bug_app.model_todo_task" model="ir.model">
+      <field name="website_form_access">True</field>
+      <field name="website_form_label">创建Bug</field>
+    </record>
+    <record id="menu_bug" model="website.menu">
+        <field name="name">Bug</field>
+        <field name="url">/bugs</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">50</field>
+    </record>
+    <function model="ir.model.fields"
+      name="formbuilder_whitelist">
+      <value>bm.bug</value>
+      <value eval="[
+        'name',
+        'user_id',
+        'deadline',
+      ]"/>
+    </function>
+    </data>
+</odoo>

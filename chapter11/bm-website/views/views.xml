@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="bm-website.list">
+      <field name="name">bm-website list</field>
+      <field name="model">bm-website.bm-website</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="bm-website.action_window">
+      <field name="name">bm-website window</field>
+      <field name="res_model">bm-website.bm-website</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="bm-website.action_server">
+      <field name="name">bm-website server</field>
+      <field name="model_id" ref="model_bm-website_bm-website"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="bm-website" id="bm-website.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="bm-website.menu_1" parent="bm-website.menu_root"/>
+    <menuitem name="Menu 2" id="bm-website.menu_2" parent="bm-website.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="bm-website.menu_1_list" parent="bm-website.menu_1"
+              action="bm-website.action_window"/>
+    <menuitem name="Server to list" id="bm-website" parent="bm-website.menu_2"
+              action="bm-website.action_server"/>
+    -->
+  </data>
+</odoo>

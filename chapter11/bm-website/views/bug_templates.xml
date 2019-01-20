@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+      <template id="assets_frontend"
+        name="bug_website_assets"
+        inherit_id="website.assets_frontend">
+          <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css"
+                  href="/bug_website/static/src/css/index.css"/>
+          </xpath>
+      </template>
+      <template id="index" name="Bug List">
+          <t t-call="website.layout">
+            <div id="wrap" class="container">
+              <h1>Bug 列表</h1>
+
+              <!-- bug列表 -->
+              <t t-foreach="bugs" t-as="bug">
+                <div class="row">
+                  <input type="checkbox" disabled="True"
+                    t-att-checked=" 'checked' if bug.is_closed else None" />
+                  <a t-attf-href="/bug/{{slug(bug)}}">
+                    <span t-field="bug.name"
+                      t-att-class="'bug-done' if bug.is_closed
+                                    else ''" />
+                  </a>
+                </div>
+              </t>
+
+              <!-- 创建新bug -->
+              <div class="row">
+                <a href="/bug/add" class="btn btn-primary btn-lg">
+                    创建
+                </a>
+              </div>
+
+            </div>
+          </t>
+      </template>
+    </data>
+</odoo>

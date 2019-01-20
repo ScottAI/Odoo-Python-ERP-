@@ -1,0 +1,90 @@
+<odoo>
+    <data>
+      <template id="hello" name="Hello Template">
+        <h1>Hello World !</h1>
+      </template>
+      <template id="detail" name="bug明细">
+        <t t-call="website.layout">
+          <div id="wrap" class="container">
+            <h1 t-field="bug.name" />
+            <p>负责人: <span t-field="bug.user_id" /></p>
+            <p>最晚解决日期: <span t-field="bug.deadline" /></p>
+          </div>
+        </t>
+      </template>
+      <template id="add" name="Add Bug">
+          <t t-call="website.layout">
+            <t t-set="additional_title">创建Bug</t>
+            <div id="wrap" class="container">
+              <div class="row">
+                <section id="forms">
+
+                  <form method="post"
+                    class="s_website_form
+                           container-fluid form-horizontal"
+                    action="/website_form/"
+                    data-model_name="bm.bug"
+        data-success_page="/bugs"
+                    enctype="multipart/form-data" >
+
+                  <!--表单字段放置在这儿! -->
+                    <div class="form-group form-field">
+                      <div class="col-md-3 col-sm-4 text-right">
+                        <label class="control-label" for="name">Bug*</label>
+                      </div>
+                      <div class="col-md-7 col-sm-8">
+                        <input name="name" type="text" required="True"
+                          class="o_website_form_input form-control" />
+                      </div>
+                    </div>
+                    <!-- 附件上传字段: -->
+                    <div class="form-group form-field">
+                      <div class="col-md-3 col-sm-4 text-right">
+                        <label class="control-label" for="file_upload">
+                          附件上传
+                        </label>
+                      </div>
+                      <div class="col-md-7 col-sm-8">
+                        <input name="file_upload" type="file"
+                          class="o_website_form_input form-control" />
+                      </div>
+                    </div>
+
+                    <!-- 用户选择字段: -->
+                    <div class="form-group form-field">
+                      <div class="col-md-3 col-sm-4 text-right">
+                        <label class="control-label" for="user_id">
+                          For Person
+                        </label>
+                      </div>
+                      <div class="col-md-7 col-sm-8">
+                        <select name="user_id"
+                          class="o_website_from_input form-control" >
+                          <t t-foreach="users" t-as="user">
+                            <option t-att-value="user.id">
+                              <t t-esc="user.name" />
+                            </option>
+                          </t>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- 提交按钮 -->
+                    <div class="form-group">
+                      <div class="col-md-offset-3 col-md-7
+                        col-sm-offset-4 col-sm-8">
+                        <a class="o_website_form_send
+                                   btn btn-primary btn-lg">
+                          Save
+                        </a>
+                        <span id="o_website_form_result"></span>
+                      </div>
+                    </div>
+
+                  </form>
+                </section>
+              </div> <!-- rows -->
+            </div> <!-- container -->
+          </t> <!-- website.layout -->
+        </template>
+    </data>
+</odoo>
