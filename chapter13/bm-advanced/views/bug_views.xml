@@ -1,0 +1,124 @@
+<odoo>
+    <data>
+    <record id="view_calendar_bug" model="ir.ui.view">
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <calendar date_start="deadline" color="user_id">
+          <!-- 展示字段定义在这里 -->
+          <field name="name" />
+          <field name="stage_id" />
+        </calendar>
+      </field>
+    </record>
+    <record id="view_graph_bug" model="ir.ui.view">
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <graph type="bar">
+          <field name="name" />
+          <field name="progress" type="measure" />
+        </graph>
+      </field>
+    </record>
+    <record id="view_pivot_bug" model="ir.ui.view">
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <pivot>
+          <field name="stage_id" type="col" />
+          <field name="user_id" />
+          <field name="deadline" interval="week" />
+          <field name="progress" type="measure" />
+        </pivot>
+      </field>
+    </record>
+    <act_window id="action_bug_button"
+      name="BUGs"
+      res_model="bm.bug"
+      view_mode="tree,form,calendar,graph,pivot"
+      domain="[('user_id','=',default_user_id)]" />
+    <record id="view_form_bug_ui"
+      model="ir.ui.view">
+      <field name="model">bm.bug</field>
+      <field name="priority">15</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <!-- 按钮、状态等组件 -->
+              <field name="state" invisible="True" />
+              <button name="do_close" type="object"
+                string="关闭"
+                attrs="{'invisible':[('state', 'in', ['draft'])]}"
+                class="oe_highlight" />
+              <field name="stage_id"
+                widget="statusbar"
+                clickable="True"
+                options="{'fold_field': 'fold'}" />
+          </header>
+          <sheet>
+              <!-- 表单主体内容 -->
+              <!-- 标题、副标题 -->
+              <div name="button_box" class="oe_button_box">
+                  <!-- 按钮区域添加在这 -->
+                  <div name="button_box" class="oe_button_box">
+                      <button class="oe_stat_button"
+                        type="action" icon="fa-tasks"
+                        name="%(action_bug_button)d"
+                        context="{'default_user_id': user_id}"
+                        help="本用户负责的所有bug" >
+                        <field string="BUGs" name="user_bug_count"
+                          widget="statinfo"/>
+                      </button>
+                  </div>
+              </div>
+              <field name="kanban_state" widget="state_selection" />
+              <div class="oe_title">
+                <label for="name" class="oe_edit_only"/>
+                <h1><field name="name"/></h1>
+                <h3>
+                  <span class="oe_read_only">创建者：</span>
+                  <label for="user_id" class="oe_edit_only"/>
+                  <field name="user_id" class="oe_inline" />
+                </h3>
+              </div>
+              <group name="group_top">
+                  <group name="group_left">
+                    <field name="user_id" />
+                    <separator string="谁关注此bug" />
+                    <field name="follower_id" />
+                  </group>
+                  <group name="group_right">
+                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="progress"/>
+                  </group>
+              </group>
+          </sheet>
+          <!-- 联系组件 -->
+          <div class="oe_chatter">
+            <!--
+            <field name="message_follower_ids" widget="mail_followers" />
+            <field name="message_ids" widget="mail_thread" />
+            -->
+          </div>
+        </form>
+      </field>
+    </record>
+    <record id="view_filter_bug"
+      model="ir.ui.view">
+      <field name="model">bm.bug</field>
+      <field name="priority">15</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="user_id"/>
+          <filter name="filter_not_close" string="未关闭"
+            domain="[('is_closed','=',False)]"/>
+          <filter name="filter_close" string="已关闭"
+            domain="[('is_closed','!=',False)]"/>
+
+          <separator/>
+          <filter name="group_user" string="按用户分组"
+            context="{'group_by': 'user_id'}"/>
+        </search>
+      </field>
+    </record>
+    </data>
+</odoo>
