@@ -38,14 +38,6 @@ class BugAdvanced(models.Model):
                 [('user_id', '=', task.user_id.id)])
 
 '''
-    @api.model
-    def create(self, vals):
-        # 继承方法前添加代码: 只能使用 `vals` dict
-        new_record = super(bm.bug, self).create(vals)
-        # 继承方法后添加代码: 还可以使用 `new_record`
-        return new_record
-'''
-'''
     tag_ids = fields.many2many(
         comodel='bm.bug.tag',
         relation='bug_tag_rel',
