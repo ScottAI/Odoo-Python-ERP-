@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bug-manage.kanban">
+            <field name="name">bug看板</field>
+            <field name="model">bm.bug.stage</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name">bug-kanban</field>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card">
+                                <a type="open">
+                                    <field name="name"/>
+                                    <field name="status"/>
+                                    <field name="bug_ids"/>
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <!-- actions opening views on models -->
+        <!--
+        <record model="ir.actions.act_window" id="bug-manage.action_window_stage">
+          <field name="name">bug-manage stage window</field>
+          <field name="res_model">bm.bug.stage</field>
+          <field name="view_mode">tree,form,kanban</field>
+        </record>
+        -->
+        <act_window id="bug-manage.action_window_stage"
+                    name="bug-manage stage window"
+                    res_model="bm.bug.stage"
+                    view_mode="tree,form,kanban"
+                    src_model="bm.bug.stage"
+                    multi="True"
+                    target="current" />
+
+
+        <!-- actions -->
+        <menuitem name="stage列表" id="bug-manage.menu_stage_list" parent="bug-manage.menu_1"
+                  action="bug-manage.action_window_stage"/>
+    </data>
+</odoo>

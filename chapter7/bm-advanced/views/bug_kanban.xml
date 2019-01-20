@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+      <!-- 为看板视图做一个动作 -->
+      <record id="bm.view_kanban_bug"
+              model="ir.actions.act_window">
+          <field name="view_mode">kanban,tree,form,calendar,graph,pivot</field>
+      </record>
+      <!-- 看板视图 -->
+      <record id="view_kanban_bug" model="ir.ui.view">
+        <field name="model">bm.bug</field>
+        <field name="priority">15</field>
+        <field name="arch" type="xml">
+          <kanban default_group_by="stage_id" class="o_kanban_small_column" >
+           <!-- 看板内容放在这 -->
+              <!-- Fields (to use in expressions)... -->
+              <field name="stage_id" />
+              <field name="color" />
+              <field name="kanban_state" />
+              <field name="priority" />
+              <field name="is_closed" />
+              <field name="follower_ids" />
+              <!-- 可选进度条  -->
+              <progressbar
+                  field="kanban_state"
+                  colors='{"done": "success", "delay": "danger"}' />
+              <!-- HTML 模板... -->
+              <templates>
+                <t t-name="kanban-box">
+                  <!-- HTML QWeb template... -->
+                  <!-- 定义 kanban-box 模板 -->
+                  <!-- 设置 Kanban 卡片颜色: -->
+                  <div t-attf-class="
+                        oe_kanban_color_#{kanban_getcolor(record.color.raw_value)}
+                        oe_kanban_global_click">
+                    <div class="o_dropdown_kanban dropdown">
+                        <!-- 卡片右上方按钮在这里定义... -->
+                        <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                        <span class="fa fa-ellipsis-v" aria-hidden="true"/>
+                      </a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <!-- 如果需要可以编辑在这里编辑动作: -->
+                        <t t-if="widget.editable">
+                          <li><a type="edit">编辑</a></li>
+                        </t>
+                        <t t-if="widget.deletable">
+                          <li><a type="delete">删除</a></li>
+                        </t>
+                        <!-- 调用服务器端模型方法: -->
+                        <t t-if="!record.is_closed.value">
+                          <li><a name="do_toggle_done" type="object">关闭bug</a>
+                          </li>
+                        </t>
+                        <!-- 颜色选择项: -->
+                        <li class="divider"/>
+                        <li class="dropdown-header">颜色</li>
+                        <li>
+                          <ul class="oe_kanban_colorpicker" data-field="color"/>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="oe_kanban_body">
+                       <!-- 看板的字段在这里定义... -->
+                         <div>
+                            <field name="tag_ids" />
+                          </div>
+
+                          <div>
+                            <strong>
+                              <a type="open"><field name="name" /></a>
+                            </strong>
+                          </div>
+                          <ul>
+                            <li><field name="user_id" /></li>
+                            <!--  书中第9章内容
+                            <li><field name="deadline" /></li>
+                            -->
+                            <li t-attf-class="oe_kanban_text_{{
+                              record.deadline.raw_value and
+                              record.deadline.raw_value lt (new Date())
+                              ? 'red' : 'black' }}">
+                              <field name="date_deadline"/>
+                            </li>
+                          </ul>
+                    </div>
+                    <div class="oe_kanban_footer">
+                      <div class="oe_kanban_footer_left">
+                         <!-- 页脚左区域... -->
+                         <field name="priority" widget="priority"/>
+                      </div>
+                      <div class="oe_kanban_footer_right">
+                          <!-- 页脚右区域... -->
+                          <field name="kanban_state" widget="kanban_state_selection"/>
+                          <img t-att-src="kanban_image(
+                            'res.users', 'image_small', record.user_id.raw_value)"
+                            t-att-title="record.user_id.value"
+                            width="24" height="24"
+                            class="oe_kanban_avatar" />
+                      </div>
+                    </div>
+                      <div class="oe_clear"/>
+                  </div> <!-- 看板颜色定义结束 -->
+                </t>
+              </templates>
+          </kanban>
+        </field>
+      </record>
+    </data>
+</odoo>
