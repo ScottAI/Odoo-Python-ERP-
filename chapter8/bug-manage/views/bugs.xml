@@ -1,0 +1,72 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="bug-manage.list">
+      <field name="name">bug列表</field>
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="is_closed"/>
+          <field name="user_id"/>
+        </tree>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="bug-manage.form">
+      <field name="name">bug表单</field>
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+              <button name="do_close" type="object" string="关闭bug"/>
+          </header>
+          <sheet>
+              <group name="group_top" col="2">
+                  <group name="group_left">
+                      <field name="name"/>
+                      <field name="user_id"/>
+                      <field name="is_closed"/>
+                  </group>
+                  <group name="group_right">
+                      <field name="close_reason"/>
+                      <field name="follower_id"/>
+                  </group>
+              </group>
+              <notebook>
+                  <page string="详细内容">
+                      <field name="detail"/>
+                  </page>
+              </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="bug-manage.search">
+      <field name="name">bug搜索</field>
+      <field name="model">bm.bug</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="is_closed"/>
+          <field name="user_id"/>
+        </search>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="bug-manage.action_window">
+      <field name="name">bug-manage window</field>
+      <field name="res_model">bm.bug</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="bug管理系统" id="bug-manage.menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="bug管理" id="bug-manage.menu_1" parent="bug-manage.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="bug列表" id="bug-manage.menu_1_list" parent="bug-manage.menu_1"
+              action="bug-manage.action_window"/>
+  </data>
+</odoo>

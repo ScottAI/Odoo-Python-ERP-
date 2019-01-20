@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bug-manage.follower_form">
+          <field name="name">follower</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+            <field name="mobile" position="after">
+                <field name="bug_ids"/>
+            </field>
+          </field>
+        </record>
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="bug-manage.follower_action_window">
+          <field name="name">follower window</field>
+          <field name="res_model">res.partner</field>
+          <field name="view_mode">form</field>
+        </record>
+
+        <!-- menu categories -->
+        <menuitem name="关注者管理" id="bug-manage.menu_2" parent="bug-manage.menu_root"/>
+        <!-- actions -->
+        <menuitem name="关注者" id="bug-manage.menu_2_form" parent="bug-manage.menu_2"
+                  action="bug-manage.follower_action_window"/>
+    </data>
+</odoo>
+
